@@ -5,10 +5,8 @@ _bmad/
 # AI tool local session state / config
 .claude/
 .opencode/
-
-# TODO: confirm whether .agents/ holds shared project config or local state.
-# If it's machine/session-specific, uncomment the line below:
 .agents/
+.github/agents/
 
 # Environment variables / secrets
 .env
