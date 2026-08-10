@@ -11,7 +11,7 @@ status: draft
 This Product Requirements Document (PRD) defines the v1 functional requirements, architecture scope boundaries, and success criteria for **Sentry_Ops**, an internal unified health monitoring and proactive alerting platform. It serves PMs, stakeholders, and downstream technical architects/developers. It builds directly upon the foundational product brief and incorporates hybrid cloud connectivity, email notification routing, and resilience parameters.
 
 ## 1. Vision
-Teams typically discover infrastructure issues (network, application, database, server) reactively — after downtime has already occurred — because monitoring for each layer lives in separate, disconnected tools. Sentry_Ops unifies health monitoring across server and database layers (with future expansion to application and network) into a single pane of glass, featuring proactive alerting that catches problems before outages occur. By consolidating key metrics and providing targeted notifications across hybrid environments (Azure cloud and on-premises via VPN/AVD), Sentry_Ops empowers engineering and operations teams to maintain high availability and swift incident response with minimal tool fatigue.
+Teams typically discover infrastructure issues (network, application, database, server) reactively — after downtime has already occurred — because monitoring for each layer lives in separate, disconnected tools. Sentry_Ops unifies health monitoring across all four core layers (Server, Database, Application, and Network) into a single pane of glass, featuring proactive alerting that catches problems before outages occur. By consolidating key metrics and providing targeted notifications across hybrid environments (Azure cloud and on-premises via VPN/AVD), Sentry_Ops empowers engineering and operations teams to maintain high availability and swift incident response with minimal tool fatigue.
 
 ## 2. Target User
 
@@ -114,15 +114,14 @@ The system dispatches formatted email alerts via pluggable SMTP configuration to
 ## 6. MVP Scope
 
 ### 6.1 In Scope
-- Server (CPU, Memory, Disk) and Database health monitoring.
+- Comprehensive health monitoring across all 4 layers: Server (CPU, Memory, Disk), Database (Query Latency, Connection Pool), Application (Request Rate, Error Rate, Response Time), and Network (Packet Loss, Latency, Bandwidth).
 - Hybrid environment monitoring (Azure + On-Prem via VPN/AVD).
 - Threshold-based alerting with pluggable SMTP email notifications.
-- Basic React dashboard with alert state tracking (Firing, Acknowledged, Resolved).
+- Basic React dashboard with alert state tracking (Firing, Acknowledged, Resolved) and cross-layer correlation.
 - Standard Azure SQL backup & IaC deployment resilience.
 
 ### 6.2 Out of Scope for MVP
-- Application-layer instrumentation (deferred to v2).
-- Network-layer monitoring and cross-layer correlation (deferred to v3).
+- Advanced ML-based anomaly detection / predictive failure analysis.
 - PagerDuty/Webhook integrations (deferred to v2+).
 
 ## 7. Success Metrics
