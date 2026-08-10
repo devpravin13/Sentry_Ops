@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentry_Ops — Unified Hybrid Health Monitoring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF6B00',
+                            darkorange: '#E05D00',
+                            lightorange: '#FFF2EC',
+                            dark: '#121212',
+                            card: '#FAFAFA',
+                            border: '#E5E5E5'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-gray-900 min-h-screen font-sans flex flex-col selection:bg-brand-orange selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="border-b border-brand-border bg-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-black rounded-md flex items-center justify-center text-brand-orange font-semibold text-base">
+                    S
+                </div>
+                <div>
+                    <h1 class="font-medium text-gray-900 tracking-tight">Sentry_Ops</h1>
+                    <p class="text-xs text-gray-400">Unified 4-Layer Hybrid Monitoring</p>
+                </div>
+            </div>
+            
+            <nav class="flex items-center space-x-1">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all bg-black text-white">
+                    Dashboard & Metrics
+                </button>
+                <button onclick="switchTab('components')" id="nav-components" class="px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all text-gray-600 hover:bg-gray-100">
+                    Component Registry
+                </button>
+                <button onclick="switchTab('alerts')" id="nav-alerts" class="px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all text-gray-600 hover:bg-gray-100 flex items-center space-x-1.5">
+                    <span>Alerts & Notifications</span>
+                    <span class="bg-brand-orange text-white text-xs px-1.5 py-0.2 rounded-full font-medium">2</span>
+                </button>
+            </nav>
+
+            <div class="flex items-center space-x-2">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs text-green-700 bg-green-50 border border-green-200">
+                    <span class="w-1.5 h-1.5 mr-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                    Hybrid Poll Active (60s)
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+
+        <!-- ================= TAB 1: DASHBOARD & METRICS ================= -->
+        <div id="tab-dashboard" class="space-y-6">
+            <!-- Header & Filter Bar -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gray-50 p-4 rounded-xl border border-brand-border">
+                <div>
+                    <h2 class="text-lg font-medium text-gray-900">Real-Time Health & Telemetry</h2>
+                    <p class="text-sm text-gray-500">Monitoring Server, Database, Application, and Network layers across Azure & On-Prem (VPN/AVD).</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <select id="filter-layer" onchange="filterDashboard()" class="bg-white border border-brand-border rounded-lg px-3 py-1.5 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-brand-orange">
+                        <option value="all">All Layers (4)</option>
+                        <option value="Server">Server Layer</option>
+                        <option value="Database">Database Layer</option>
+                        <option value="Application">Application Layer</option>
+                        <option value="Network">Network Layer</option>
+                    </select>
+                    <select id="filter-env" onchange="filterDashboard()" class="bg-white border border-brand-border rounded-lg px-3 py-1.5 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-brand-orange">
+                        <option value="all">All Environments</option>
+                        <option value="Azure">Azure Cloud</option>
+                        <option value="On-Prem">On-Prem (VPN/AVD)</option>
+                    </select>
+                    <button onclick="triggerSimulation()" class="bg-brand-orange hover:bg-brand-darkorange text-white px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center space-x-1.5">
+                        <i data-lucide="zap" class="w-4 h-4"></i>
+                        <span>Simulate Breach</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-brand-card border border-brand-border p-4 rounded-xl">
+                    <div class="flex items-center justify-between text-gray-400 text-xs uppercase tracking-wider">
+                        <span>Monitored Components</span>
+                        <i data-lucide="server" class="w-4 h-4 text-brand-orange"></i>
+                    </div>
+                    <div class="mt-2 flex items-baseline justify-between">
+                        <span class="text-2xl font-normal text-gray-900">12</span>
+                        <span class="text-xs text-green-600">100% Reachable</span>
+                    </div>
+                </div>
+                <div class="bg-brand-card border border-brand-border p-4 rounded-xl">
+                    <div class="flex items-center justify-between text-gray-400 text-xs uppercase tracking-wider">
+                        <span>Active Firing Alerts</span>
+                        <i data-lucide="alert-triangle" class="w-4 h-4 text-brand-orange"></i>
+                    </div>
+                    <div class="mt-2 flex items-baseline justify-between">
+                        <span class="text-2xl font-normal text-brand-orange" id="kpi-alerts">2</span>
+                        <span class="text-xs text-gray-400">SMTP Queued</span>
+                    </div>
+                </div>
+                <div class="bg-brand-card border border-brand-border p-4 rounded-xl">
+                    <div class="flex items-center justify-between text-gray-400 text-xs uppercase tracking-wider">
+                        <span>Avg Query Latency (DB)</span>
+                        <span class="px-2 py-0.5 bg-brand-lightorange text-brand-orange text-xs rounded">Database</span>
+                    </div>
+                    <div class="mt-2 flex items-baseline justify-between">
+                        <span class="text-2xl font-normal text-gray-900" id="kpi-latency">42 ms</span>
+                        <span class="text-xs text-green-600">Normal</span>
+                    </div>
+                </div>
+                <div class="bg-brand-card border border-brand-border p-4 rounded-xl">
+                    <div class="flex items-center justify-between text-gray-400 text-xs uppercase tracking-wider">
+                        <span>App Error Rate (5xx)</span>
+                        <span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">App</span>
+                    </div>
+                    <div class="mt-2 flex items-baseline justify-between">
+                        <span class="text-2xl font-normal text-gray-900" id="kpi-error">0.04%</span>
+                        <span class="text-xs text-green-600">Healthy</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4-Layer Metric Grid -->
+            <div id="components-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: COMPONENT REGISTRY ================= -->
+        <div id="tab-components" class="space-y-6 hidden">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gray-50 p-4 rounded-xl border border-brand-border">
+                <div>
+                    <h2 class="text-lg font-medium text-gray-900">Component Registry & Configuration</h2>
+                    <p class="text-sm text-gray-500">Register and manage server, database, application, and network targets across hybrid environments.</p>
+                </div>
+                <button onclick="openRegisterModal()" class="bg-brand-orange hover:bg-brand-darkorange text-white px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center space-x-1.5">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>Register New Component</span>
+                </button>
+            </div>
+
+            <!-- Registry Table -->
+            <div class="bg-white border border-brand-border rounded-xl overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider border-b border-brand-border">
+                            <th class="p-3.5 font-normal">Component Name</th>
+                            <th class="p-3.5 font-normal">Layer</th>
+                            <th class="p-3.5 font-normal">Environment</th>
+                            <th class="p-3.5 font-normal">Endpoint / IP</th>
+                            <th class="p-3.5 font-normal">Polling Interval</th>
+                            <th class="p-3.5 font-normal">Status</th>
+                            <th class="p-3.5 font-normal text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registry-table-body" class="divide-y divide-brand-border text-sm text-gray-700">
+                        <!-- Injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: ALERTS & NOTIFICATIONS ================= -->
+        <div id="tab-alerts" class="space-y-6 hidden">
+            <div class="bg-gray-50 p-4 rounded-xl border border-brand-border flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-medium text-gray-900">Active Alerts & Pluggable SMTP Dispatch</h2>
+                    <p class="text-sm text-gray-500">Manage incident lifecycle states and team email routing.</p>
+                </div>
+                <span class="text-xs px-3 py-1 bg-brand-lightorange text-brand-orange rounded-full border border-orange-200">
+                    SMTP: smtp.obi-internal.local:587
+                </span>
+            </div>
+
+            <div id="alerts-container" class="space-y-3">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Register Component Modal -->
+    <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-lg w-full p-6 space-y-5 border border-brand-border shadow-xl">
+            <div class="flex items-center justify-between border-b pb-3">
+                <h3 class="font-medium text-gray-900">Register Hybrid Component</h3>
+                <button onclick="closeRegisterModal()" class="text-gray-400 hover:text-black">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form id="register-form" onsubmit="handleRegisterSubmit(event)" class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs uppercase text-gray-500 mb-1">Component Name</label>
+                    <input type="text" id="reg-name" required placeholder="e.g. onprem-sql-prod-02" class="w-full border border-brand-border rounded-lg px-3 py-2 text-gray-800 focus:ring-1 focus:ring-brand-orange focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase text-gray-500 mb-1">Infrastructure Layer</label>
+                        <select id="reg-layer" class="w-full border border-brand-border rounded-lg px-3 py-2 text-gray-800 focus:ring-1 focus:ring-brand-orange focus:outline-none">
+                            <option value="Server">Server</option>
+                            <option value="Database">Database</option>
+                            <option value="Application">Application</option>
+                            <option value="Network">Network</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase text-gray-500 mb-1">Environment</label>
+                        <select id="reg-env" class="w-full border border-brand-border rounded-lg px-3 py-2 text-gray-800 focus:ring-1 focus:ring-brand-orange focus:outline-none">
+                            <option value="Azure">Azure Cloud</option>
+                            <option value="On-Prem">On-Prem (VPN/AVD)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase text-gray-500 mb-1">Endpoint / Connection String / IP</label>
+                    <input type="text" id="reg-endpoint" required placeholder="e.g. 10.200.45.12:1433" class="w-full border border-brand-border rounded-lg px-3 py-2 text-gray-800 focus:ring-1 focus:ring-brand-orange focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase text-gray-500 mb-1">Polling Interval</label>
+                        <select id="reg-interval" class="w-full border border-brand-border rounded-lg px-3 py-2 text-gray-800 focus:ring-1 focus:ring-brand-orange focus:outline-none">
+                            <option value="30s">30 Seconds</option>
+                            <option value="60s" selected>60 Seconds</option>
+                            <option value="300s">5 Minutes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase text-gray-500 mb-1">Threshold Profile</label>
+                        <select id="reg-threshold" class="w-full border border-brand-border rounded-lg px-3 py-2 text-gray-800 focus:ring-1 focus:ring-brand-orange focus:outline-none">
+                            <option value="Standard">Standard (CPU > 85%)</option>
+                            <option value="Strict">Strict (CPU > 75%)</option>
+                            <option value="Relaxed">Relaxed (CPU > 90%)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-2 pt-3 border-t">
+                    <button type="button" onclick="closeRegisterModal()" class="px-4 py-1.5 rounded-lg border border-brand-border text-gray-600 hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-1.5 rounded-lg bg-brand-orange hover:bg-brand-darkorange text-white">Save Component</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        let components = [
+            { id: 1, name: 'obi-prod-vm-01', layer: 'Server', env: 'Azure', endpoint: '10.0.1.15:22', interval: '60s', status: 'Healthy', metricName: 'CPU Usage', metricVal: '48.2%', threshold: '85%', alertState: 'Normal' },
+            { id: 2, name: 'obi-core-db-sql', layer: 'Database', env: 'On-Prem', endpoint: '10.200.12.50:1433', interval: '60s', status: 'Firing', metricName: 'Query Latency', metricVal: '540 ms', threshold: '500 ms', alertState: 'Firing' },
+            { id: 3, name: 'obi-auth-service', layer: 'Application', env: 'Azure', endpoint: 'https://auth.obi.internal/health', interval: '30s', status: 'Healthy', metricName: 'Error Rate (5xx)', metricVal: '0.01%', threshold: '1.0%', alertState: 'Normal' },
+            { id: 4, name: 'obi-vpn-gateway-01', layer: 'Network', env: 'On-Prem', endpoint: '192.168.1.1 (SNMP)', interval: '60s', status: 'Firing', metricName: 'Packet Loss', metricVal: '4.2%', threshold: '2.0%', alertState: 'Firing' },
+            { id: 5, name: 'obi-cache-redis', layer: 'Database', env: 'Azure', endpoint: 'redis.obi.internal:6379', interval: '60s', status: 'Healthy', metricName: 'Memory Usage', metricVal: '62.4%', threshold: '85%', alertState: 'Normal' },
+            { id: 6, name: 'obi-ingress-proxy', layer: 'Network', env: 'Azure', endpoint: 'proxy.obi.internal', interval: '30s', status: 'Healthy', metricName: 'Bandwidth', metricVal: '1.2 Gbps', threshold: '2.5 Gbps', alertState: 'Normal' }
+        ];
+
+        let alerts = [
+            { id: 101, component: 'obi-core-db-sql', layer: 'Database', env: 'On-Prem', metric: 'Query Latency (540 ms)', time: '3 mins ago', state: 'Firing', alias: 'dba-team@obi.internal' },
+            { id: 102, component: 'obi-vpn-gateway-01', layer: 'Network', env: 'On-Prem', metric: 'Packet Loss (4.2%)', time: '12 mins ago', state: 'Firing', alias: 'netops-team@obi.internal' }
+        ];
+
+        function init() {
+            renderDashboard();
+            renderRegistry();
+            renderAlerts();
+            lucide.createIcons();
+        }
+
+        function switchTab(tab) {
+            document.getElementById('tab-dashboard').classList.add('hidden');
+            document.getElementById('tab-components').classList.add('hidden');
+            document.getElementById('tab-alerts').classList.add('hidden');
+
+            document.getElementById('nav-dashboard').className = 'px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all text-gray-600 hover:bg-gray-100';
+            document.getElementById('nav-components').className = 'px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all text-gray-600 hover:bg-gray-100';
+            document.getElementById('nav-alerts').className = 'px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all text-gray-600 hover:bg-gray-100 flex items-center space-x-1.5';
+
+            if (tab === 'dashboard') {
+                document.getElementById('tab-dashboard').classList.remove('hidden');
+                document.getElementById('nav-dashboard').className = 'px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all bg-black text-white';
+            } else if (tab === 'components') {
+                document.getElementById('tab-components').classList.remove('hidden');
+                document.getElementById('nav-components').className = 'px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all bg-black text-white';
+            } else if (tab === 'alerts') {
+                document.getElementById('tab-alerts').classList.remove('hidden');
+                document.getElementById('nav-alerts').className = 'px-3.5 py-1.5 rounded-lg font-medium text-sm transition-all bg-black text-white flex items-center space-x-1.5';
+            }
+            lucide.createIcons();
+        }
+
+        function renderDashboard() {
+            const layerFilter = document.getElementById('filter-layer').value;
+            const envFilter = document.getElementById('filter-env').value;
+            const grid = document.getElementById('components-grid');
+            grid.innerHTML = '';
+
+            const filtered = components.filter(c => {
+                if (layerFilter !== 'all' && c.layer !== layerFilter) return false;
+                if (envFilter !== 'all' && c.env !== envFilter) return false;
+                return true;
+            });
+
+            filtered.forEach(c => {
+                const isFiring = c.alertState === 'Firing';
+                const cardBorder = isFiring ? 'border-brand-orange ring-1 ring-brand-orange' : 'border-brand-border';
+                const statusBadge = isFiring 
+                    ? '<span class="px-2 py-0.5 rounded-full text-xs text-brand-orange bg-brand-lightorange border border-orange-200">Firing</span>'
+                    : '<span class="px-2 py-0.5 rounded-full text-xs text-green-700 bg-green-50 border border-green-200">Healthy</span>';
+
+                const layerBg = c.layer === 'Server' ? 'bg-gray-100 text-gray-700' : c.layer === 'Database' ? 'bg-orange-50 text-brand-orange' : c.layer === 'Application' ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700';
+
+                grid.innerHTML += `
+                    <div class="bg-brand-card border ${cardBorder} p-4 rounded-xl flex flex-col justify-between space-y-3">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs px-2 py-0.5 rounded ${layerBg}">${c.layer}</span>
+                                    <span class="text-xs text-gray-400">${c.env}</span>
+                                </div>
+                                <h3 class="font-normal text-gray-900 text-sm mt-1.5">${c.name}</h3>
+                                <p class="text-xs text-gray-400 font-mono">${c.endpoint}</p>
+                            </div>
+                            <div>${statusBadge}</div>
+                        </div>
+                        <div class="bg-white border border-brand-border p-2.5 rounded-lg flex items-center justify-between text-sm">
+                            <div>
+                                <span class="text-xs text-gray-400 block">${c.metricName}</span>
+                                <span class="text-base text-gray-900">${c.metricVal}</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs text-gray-400 block">Threshold</span>
+                                <span class="text-xs text-gray-600">${c.threshold}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-400 pt-2 border-t border-gray-100">
+                            <span>Poll: 60s (VPN/AVD)</span>
+                            <button onclick="toggleComponentAlert(${c.id})" class="text-brand-orange hover:underline">
+                                ${isFiring ? 'Resolve' : 'Simulate Breach'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function filterDashboard() { renderDashboard(); }
+
+        function renderRegistry() {
+            const tbody = document.getElementById('registry-table-body');
+            tbody.innerHTML = '';
+            components.forEach(c => {
+                const statusBadge = c.status === 'Firing' 
+                    ? '<span class="px-2 py-0.5 rounded-full text-xs text-brand-orange bg-brand-lightorange">Firing</span>'
+                    : '<span class="px-2 py-0.5 rounded-full text-xs text-green-700 bg-green-50">Online</span>';
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="p-3.5 text-gray-900">${c.name}</td>
+                        <td class="p-3.5"><span class="px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-700">${c.layer}</span></td>
+                        <td class="p-3.5 text-gray-500">${c.env}</td>
+                        <td class="p-3.5 font-mono text-xs text-gray-400">${c.endpoint}</td>
+                        <td class="p-3.5 text-gray-500">${c.interval}</td>
+                        <td class="p-3.5">${statusBadge}</td>
+                        <td class="p-3.5 text-right">
+                            <button onclick="deleteComponent(${c.id})" class="text-gray-400 hover:text-brand-orange text-xs">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderAlerts() {
+            const container = document.getElementById('alerts-container');
+            container.innerHTML = '';
+            if (alerts.length === 0) {
+                container.innerHTML = `<div class="bg-white border border-brand-border p-6 rounded-xl text-center text-gray-400 text-sm">No active firing alerts. All systems healthy.</div>`;
+                return;
+            }
+
+            alerts.forEach(a => {
+                container.innerHTML += `
+                    <div class="bg-brand-card border border-brand-orange p-4 rounded-xl flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-sm">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-brand-lightorange rounded-lg flex items-center justify-center text-brand-orange flex-shrink-0">
+                                <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <h4 class="text-gray-900">${a.component}</h4>
+                                    <span class="px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-700">${a.layer}</span>
+                                    <span class="text-xs text-gray-400">${a.env}</span>
+                                </div>
+                                <p class="text-xs text-gray-600 mt-0.5">Breach Detected: <span class="text-brand-orange">${a.metric}</span></p>
+                                <p class="text-xs text-gray-400 mt-0.5">SMTP: <span class="font-mono text-gray-500">${a.alias}</span> • ${a.time}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="acknowledgeAlert(${a.id})" class="px-3 py-1.5 rounded-lg text-xs border border-brand-border text-gray-600 hover:bg-gray-50">Acknowledge</button>
+                            <button onclick="resolveAlert(${a.id})" class="px-3 py-1.5 rounded-lg text-xs bg-brand-orange hover:bg-brand-darkorange text-white">Resolve</button>
+                        </div>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function triggerSimulation() {
+            const target = components.find(c => c.id === 2);
+            if (target) {
+                target.alertState = target.alertState === 'Firing' ? 'Normal' : 'Firing';
+                target.status = target.alertState;
+                renderDashboard();
+                renderRegistry();
+            }
+        }
+
+        function toggleComponentAlert(id) {
+            const c = components.find(item => item.id === id);
+            if (c) {
+                c.alertState = c.alertState === 'Firing' ? 'Normal' : 'Firing';
+                c.status = c.alertState;
+                renderDashboard();
+                renderRegistry();
+            }
+        }
+
+        function openRegisterModal() { document.getElementById('register-modal').classList.remove('hidden'); }
+        function closeRegisterModal() { document.getElementById('register-modal').classList.add('hidden'); }
+
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const layer = document.getElementById('reg-layer').value;
+            const env = document.getElementById('reg-env').value;
+            const endpoint = document.getElementById('reg-endpoint').value;
+            const interval = document.getElementById('reg-interval').value;
+
+            components.push({
+                id: components.length + 1,
+                name: name, layer: layer, env: env, endpoint: endpoint, interval: interval,
+                status: 'Healthy', metricName: 'Status Probe', metricVal: 'OK', threshold: 'N/A', alertState: 'Normal'
+            });
+            renderDashboard();
+            renderRegistry();
+            closeRegisterModal();
+            document.getElementById('register-form').reset();
+        }
+
+        function deleteComponent(id) {
+            components = components.filter(c => c.id !== id);
+            renderDashboard();
+            renderRegistry();
+        }
+
+        function acknowledgeAlert(id) { alert('Alert #' + id + ' acknowledged.'); }
+        function resolveAlert(id) {
+            alerts = alerts.filter(a => a.id !== id);
+            document.getElementById('kpi-alerts').innerText = alerts.length;
+            renderAlerts();
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
