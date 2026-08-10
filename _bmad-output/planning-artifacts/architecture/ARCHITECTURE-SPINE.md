@@ -30,20 +30,20 @@
 
 ```mermaid
 graph TD
-    subgraph On-Premise Environment [On-Premise (via VPN/AVD)]
+    subgraph OnPrem ["On-Premise (VPN/AVD)"]
         OP_Server[Servers / VMs]
         OP_DB[(Databases)]
         OP_Net[Network Nodes]
     end
 
-    subgraph Azure Cloud [Azure Cloud Infrastructure]
+    subgraph AzureCloud ["Azure Cloud Infrastructure"]
         LB[Load Balancer]
         API[ASP.NET Core API / Ingestion Engine]
         DB[(Azure SQL Database)]
         SMTP[Pluggable SMTP Server]
     end
 
-    subgraph Client [Engineering Operations]
+    subgraph Client ["Engineering Operations"]
         SPA[React SPA Dashboard]
     end
 
