@@ -61,31 +61,45 @@ Administrators can register server and database components specifying their envi
 - System successfully stores component definitions in Azure SQL.
 - System validates connection connectivity upon registration.
 
-#### FR-2: Polling and Metric Ingestion
-The backend polling engine periodically collects CPU %, Memory %, Disk Space %, and DB query latency metrics from registered components across hybrid boundaries. Realizes UJ-1.
+#### FR-2: Polling and Metric Ingestion (Adaptive Tunnel Health)
+The backend polling engine periodically collects health metrics across all 4 layers (Server, Database, Application, Network) across hybrid boundaries using an adaptive polling heartbeat (scaling intervals dynamically between 10s and 60s based on tunnel stability). Realizes UJ-1.
 
 **Consequences (testable):**
-- Metrics are ingested at the configured interval (default 60 seconds).
+- Metrics are ingested at adaptive intervals based on component health state.
 - Failed polling attempts log an unreachable status without crashing the monitoring service.
 
-### 4.2 Threshold-Based Proactive Alerting & Notifications
-**Description:** Evaluates ingested metrics against configurable component thresholds and dispatches targeted email notifications when breaches occur. Realizes UJ-2.
+### 4.2 Threshold-Based Proactive Alerting, Correlation & Notifications
+**Description:** Evaluates ingested metrics against configurable component thresholds, executes cross-layer correlation rules, and dispatches targeted email notifications with smart silencing and escalation. Realizes UJ-2.
 
 **Functional Requirements:**
 
-#### FR-3: Configurable Alert Thresholds
-Users can define and update warning and critical thresholds per component (e.g., CPU > 85% for 5 mins). Realizes UJ-2.
+#### FR-3: Configurable Alert Thresholds & Smart Silencing
+Users can define and update warning and critical thresholds per component with built-in transient filtering (e.g., ignoring CPU spikes under 3 minutes to prevent alert fatigue). Realizes UJ-2.
 
 **Consequences (testable):**
 - Threshold rules are persisted and evaluated against every incoming metric batch.
-- Alert transitions correctly from *Healthy* to *Firing* upon sustained breach.
+- Transient breaches under the duration threshold auto-resolve silently without firing notifications.
 
-#### FR-4: Targeted Email Notifications & State Tracking
-The system dispatches formatted email alerts via pluggable SMTP configuration to designated team email aliases and tracks alert lifecycle states (*Firing*, *Acknowledged*, *Resolved*). Realizes UJ-2.
+#### FR-4: Targeted Email Notifications, State Tracking & Auto-Escalation
+The system dispatches formatted email alerts via pluggable SMTP configuration to designated team email aliases, tracks alert lifecycle states (*Firing*, *Acknowledged*, *Resolved*), and auto-escalates unacknowledged alerts after 15 minutes. Realizes UJ-2.
 
 **Consequences (testable):**
 - Email is successfully sent to the configured recipient alias upon alert creation.
-- Users can update alert state (acknowledge/resolve) via the Sentry_Ops dashboard.
+- Unacknowledged firing alerts automatically escalate priority tags after 15 minutes.
+
+#### FR-5: Cross-Layer Correlation & Dependency Mapping
+The system automatically correlates multi-layer anomalies into a single root-cause timeline and provides an interactive visual dependency graph illustrating how failures propagate across Server, Database, Application, and Network layers. Realizes UJ-1, UJ-2.
+
+**Consequences (testable):**
+- System generates unified root-cause event summaries when multi-layer anomalies coincide.
+- Visual dependency graph correctly renders component relationships.
+
+#### FR-6: Interactive Action Drawer & Diagnostic Probes
+Operators can open a side action drawer from any component or alert card to execute one-click diagnostic connection probes and transition alert states with optional remediation notes. Realizes UJ-1, UJ-2.
+
+**Consequences (testable):**
+- Selecting a component/alert opens the side action drawer instantly.
+- One-click diagnostic probe successfully verifies endpoint reachability and displays live results.
 
 ## 4.3 Cross-Cutting Non-Functional Requirements (NFRs)
 
