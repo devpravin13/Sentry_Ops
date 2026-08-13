@@ -116,7 +116,12 @@ Operators can open a side action drawer from any component or alert card to exec
 - **Credential Protection:** Database connection strings and SMTP credentials must be securely stored using encrypted configuration settings or environment variables.
 
 #### NFR-4: Operability & Auditability
-- **Alert State Tracking:** All alert state changes (*Firing* → *Acknowledged* → *Resolved*) must record timestamp and operator context for internal operational review.
+- **Alert State Tracking:** All alert state changes (*Firing* → *Acknowledged* → *Resolved*) must record timestamp, operator context, and remediation notes for internal operational review.
+
+#### NFR-5: Adaptive Polling Efficiency & Network Throttling
+- **Bandwidth Conservation:** Under stable (Healthy) network conditions over VPN/AVD tunnels, adaptive polling intervals must back off to baseline intervals (e.g., 60s) to prevent unnecessary network overhead.
+- **Rapid Diagnostics:** Upon detecting jitter or warning states, adaptive polling must accelerate frequency (10s–15s) without saturating intermediary network router buffers or triggering artificial throttling.
+
 
 
 ## 5. Non-Goals (Explicit)

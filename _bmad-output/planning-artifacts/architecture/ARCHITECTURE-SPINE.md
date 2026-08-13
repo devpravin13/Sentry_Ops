@@ -63,6 +63,7 @@ graph TD
 - **Deployment & Environments:** Containerized workloads deployed on Azure App Service / Azure Container Apps with Azure SQL Database. Infrastructure provisioned via Infrastructure-as-Code (Bicep/Terraform).
 - **Backup & Recovery:** Daily automated Azure SQL database backups and automated IaC redeployment scripts. No complex multi-region high availability required for v1.
 - **Observability & Runbooks:** Built-in health check endpoints (`/health`) for Sentry_Ops itself, structured JSON logging via Serilog, and operational runbooks for alert tuning and SMTP reconnection.
+- **Adaptive Polling & Network Efficiency (NFR-5):** Polling over VPN/AVD tunnels dynamically scales between baseline (60s) and high-fidelity diagnostic (10s-15s) frequencies to conserve bandwidth while ensuring rapid incident detection.
 
 ## 5. Deferred & Out of Scope
 - **Advanced Anomaly Detection (ML):** Deferred to post-v1; rule-based static and dynamic thresholds take precedence.
