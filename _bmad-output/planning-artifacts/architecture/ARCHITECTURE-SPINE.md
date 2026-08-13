@@ -19,12 +19,17 @@
 ### AD-3: Unified Multi-Layer Data Model & Correlation Engine
 - **Binds:** Storage of metrics across Server, Database, Application, and Network layers in a unified time-series/relational schema within Azure SQL, processed by a centralized correlation engine.
 - **Prevents:** Siloed data stores for different monitoring layers.
-- **Rule:** Cross-layer correlation rules evaluate time-windowed metric anomalies to identify root causes (e.g., Network latency + DB query delay + Server CPU).
+- **Rule:** Cross-layer correlation rules evaluate time-windowed metric anomalies to identify root causes (e.g., Network latency + DB query delay + Server CPU) and power interactive dependency graphs.
 
 ### AD-4: Decoupled SPA Frontend (React + TypeScript + Tailwind)
-- **Binds:** React SPA communicating exclusively with the backend via RESTful APIs and SignalR for real-time alert/metric streaming.
+- **Binds:** React SPA communicating exclusively with the backend via RESTful APIs and SignalR for real-time alert/metric streaming, featuring an interactive side action drawer for diagnostic probes.
 - **Prevents:** Tight coupling between server-side rendering and business logic.
 - **Rule:** Frontend state management must handle connection drops gracefully with automatic reconnection for real-time WebSocket/SignalR feeds.
+
+### AD-5: Adaptive Tunnel Health Polling Service
+- **Binds:** Background hosted service (`IHostedService`) utilizing dynamic interval scaling (10s-60s) based on tunnel stability and component health states.
+- **Prevents:** Unnecessary VPN/AVD bandwidth saturation during stable states and delayed diagnostics during anomalies.
+- **Rule:** Polling frequency automatically accelerates upon detecting jitter or warning signs and backs off smoothly upon stabilization.
 
 ## 3. System Topology & Data Flow (Mermaid)
 
@@ -44,16 +49,16 @@ graph TD
     end
 
     subgraph Client ["Engineering Operations"]
-        SPA[React SPA Dashboard]
+        SPA[React SPA Dashboard + Action Drawer]
     end
 
-    OP_Server -->|Secure Polling / Push| LB
+    OP_Server -->|Adaptive Polling / Push| LB
     OP_DB -->|Query Latency Probes| LB
     OP_Net -->|SNMP / Ping Probes| LB
     
     LB --> API
     API --> DB
-    API -->|Threshold Breach| SMTP
+    API -->|Threshold Breach & Escalation| SMTP
     SMTP -->|Email Alert| Eng[Engineering Team Alias]
 
     SPA -->|REST / SignalR Real-time| API
