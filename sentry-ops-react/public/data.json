@@ -1,0 +1,2739 @@
+{
+  "generatedAt": "2026-08-13T11:16:13.202Z",
+  "summary": {
+    "name": "Sentry_Ops",
+    "subtitle": "Hybrid Health & Resilience",
+    "environments": [
+      "Azure",
+      "On-Prem"
+    ],
+    "layers": [
+      "Network",
+      "Application",
+      "Database",
+      "Server"
+    ]
+  },
+  "components": [
+    {
+      "id": 1,
+      "name": "core-switch-71",
+      "layer": "Network",
+      "environment": "On-Prem",
+      "endpoint": "192.140.35.27 (SNMP)",
+      "probeType": "SNMP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Firing",
+      "alertState": "Firing",
+      "severity": "Critical",
+      "team": "network-team@sentry.local",
+      "metricName": "Packet Loss",
+      "metricValue": "4.40%",
+      "threshold": "2.0%",
+      "metrics": {
+        "packetLoss": 4.4,
+        "bandwidth": 1.26,
+        "latency": 107
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "10s",
+        "base": "60s",
+        "rationale": "Firing — poll tightened to 10s for faster recovery signal."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "Network anomaly is driving cascading failures downstream across Database, Application.",
+        "role": "Root Cause",
+        "relatedLayers": [
+          "Database",
+          "Application"
+        ]
+      },
+      "diagnostics": {
+        "probeType": "SNMP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "32ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-07"
+    },
+    {
+      "id": 2,
+      "name": "vpn-gateway-25",
+      "layer": "Network",
+      "environment": "On-Prem",
+      "endpoint": "122.69.78.243 (SNMP)",
+      "probeType": "SNMP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "network-team@sentry.local",
+      "metricName": "Packet Loss",
+      "metricValue": "1.23%",
+      "threshold": "2.0%",
+      "metrics": {
+        "packetLoss": 1.23,
+        "bandwidth": 0.97,
+        "latency": 92
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "SNMP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "10ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-10"
+    },
+    {
+      "id": 3,
+      "name": "ingress-proxy-22",
+      "layer": "Network",
+      "environment": "Azure",
+      "endpoint": "142.115.141.227 (SNMP)",
+      "probeType": "SNMP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "network-team@sentry.local",
+      "metricName": "Packet Loss",
+      "metricValue": "0.53%",
+      "threshold": "2.0%",
+      "metrics": {
+        "packetLoss": 0.53,
+        "bandwidth": 2.38,
+        "latency": 69
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Transient suppressed — polling held at baseline cadence."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": true,
+        "suppressedSince": "4 mins ago",
+        "autoRetestIn": "2m"
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": "10m",
+        "status": "Holding",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "SNMP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "23ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-03"
+    },
+    {
+      "id": 4,
+      "name": "load-balancer-37",
+      "layer": "Network",
+      "environment": "Azure",
+      "endpoint": "171.146.142.84 (SNMP)",
+      "probeType": "SNMP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "network-team@sentry.local",
+      "metricName": "Packet Loss",
+      "metricValue": "1.55%",
+      "threshold": "2.0%",
+      "metrics": {
+        "packetLoss": 1.55,
+        "bandwidth": 0.89,
+        "latency": 152
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "SNMP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "9ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-02"
+    },
+    {
+      "id": 5,
+      "name": "core-switch-67",
+      "layer": "Network",
+      "environment": "Azure",
+      "endpoint": "127.55.43.19 (SNMP)",
+      "probeType": "SNMP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "network-team@sentry.local",
+      "metricName": "Packet Loss",
+      "metricValue": "0.63%",
+      "threshold": "2.0%",
+      "metrics": {
+        "packetLoss": 0.63,
+        "bandwidth": 0.86,
+        "latency": 64
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "SNMP",
+        "lastProbe": {
+          "status": "unreachable",
+          "rtt": "timeout",
+          "packetLoss": "N/A",
+          "performedAt": "last retry in 15s"
+        }
+      },
+      "registeredAt": "2026-08-12"
+    },
+    {
+      "id": 6,
+      "name": "firewall-28",
+      "layer": "Network",
+      "environment": "Azure",
+      "endpoint": "29.176.94.237 (SNMP)",
+      "probeType": "SNMP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "network-team@sentry.local",
+      "metricName": "Packet Loss",
+      "metricValue": "1.67%",
+      "threshold": "2.0%",
+      "metrics": {
+        "packetLoss": 1.67,
+        "bandwidth": 1.46,
+        "latency": 86
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "SNMP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "34ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-12"
+    },
+    {
+      "id": 7,
+      "name": "load-balancer-95",
+      "layer": "Network",
+      "environment": "On-Prem",
+      "endpoint": "39.127.146.218 (SNMP)",
+      "probeType": "SNMP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "network-team@sentry.local",
+      "metricName": "Packet Loss",
+      "metricValue": "0.71%",
+      "threshold": "2.0%",
+      "metrics": {
+        "packetLoss": 0.71,
+        "bandwidth": 2.41,
+        "latency": 22
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "SNMP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "10ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-07"
+    },
+    {
+      "id": 8,
+      "name": "edge-router-56",
+      "layer": "Network",
+      "environment": "Azure",
+      "endpoint": "192.112.253.197 (SNMP)",
+      "probeType": "SNMP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "network-team@sentry.local",
+      "metricName": "Packet Loss",
+      "metricValue": "0.28%",
+      "threshold": "2.0%",
+      "metrics": {
+        "packetLoss": 0.28,
+        "bandwidth": 2.28,
+        "latency": 48
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "SNMP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "23ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-11"
+    },
+    {
+      "id": 9,
+      "name": "inventory-service-56",
+      "layer": "Application",
+      "environment": "On-Prem",
+      "endpoint": "https://inventory-service-56.internal/health",
+      "probeType": "Health / API",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Firing",
+      "alertState": "Firing",
+      "severity": "Critical",
+      "team": "application-team@sentry.local",
+      "metricName": "Error Rate",
+      "metricValue": "2.20%",
+      "threshold": "1.0%",
+      "metrics": {
+        "responseTime": 76,
+        "errorRate": 2.2,
+        "requestRate": 173.8,
+        "availability": 96.13
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "10s",
+        "base": "60s",
+        "rationale": "Firing — poll tightened to 10s for faster recovery signal."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": "6 mins ago",
+        "autoRetestIn": "2m"
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": "14m",
+        "status": "Holding",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "Degradation propagated from an upstream layer anomaly.",
+        "role": "Affected",
+        "relatedLayers": [
+          "Network"
+        ]
+      },
+      "diagnostics": {
+        "probeType": "Health / API",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "35ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-01"
+    },
+    {
+      "id": 10,
+      "name": "order-service-45",
+      "layer": "Application",
+      "environment": "On-Prem",
+      "endpoint": "https://order-service-45.internal/health",
+      "probeType": "Health / API",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "application-team@sentry.local",
+      "metricName": "Error Rate",
+      "metricValue": "0.10%",
+      "threshold": "1.0%",
+      "metrics": {
+        "responseTime": 164,
+        "errorRate": 0.1,
+        "requestRate": 10.5,
+        "availability": 99.94
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "Health / API",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "9ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-01"
+    },
+    {
+      "id": 11,
+      "name": "payment-service-26",
+      "layer": "Application",
+      "environment": "On-Prem",
+      "endpoint": "https://payment-service-26.internal/health",
+      "probeType": "Health / API",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "application-team@sentry.local",
+      "metricName": "Error Rate",
+      "metricValue": "0.47%",
+      "threshold": "1.0%",
+      "metrics": {
+        "responseTime": 56,
+        "errorRate": 0.47,
+        "requestRate": 118,
+        "availability": 96.92
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "Health / API",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "20ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-12"
+    },
+    {
+      "id": 12,
+      "name": "api-gateway-89",
+      "layer": "Application",
+      "environment": "Azure",
+      "endpoint": "https://api-gateway-89.internal/health",
+      "probeType": "Health / API",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "application-team@sentry.local",
+      "metricName": "Error Rate",
+      "metricValue": "0.20%",
+      "threshold": "1.0%",
+      "metrics": {
+        "responseTime": 131,
+        "errorRate": 0.2,
+        "requestRate": 102.3,
+        "availability": 97.62
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "Health / API",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "13ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-12"
+    },
+    {
+      "id": 13,
+      "name": "order-service-34",
+      "layer": "Application",
+      "environment": "On-Prem",
+      "endpoint": "https://order-service-34.internal/health",
+      "probeType": "Health / API",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "application-team@sentry.local",
+      "metricName": "Error Rate",
+      "metricValue": "0.80%",
+      "threshold": "1.0%",
+      "metrics": {
+        "responseTime": 122,
+        "errorRate": 0.8,
+        "requestRate": 112.3,
+        "availability": 98.95
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Transient suppressed — polling held at baseline cadence."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": true,
+        "suppressedSince": "2 mins ago",
+        "autoRetestIn": "1m"
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": "8m",
+        "status": "Holding",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "Health / API",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "27ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-12"
+    },
+    {
+      "id": 14,
+      "name": "core-db-93",
+      "layer": "Database",
+      "environment": "Azure",
+      "endpoint": "89.178.146.141:1433",
+      "probeType": "TCP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "database-team@sentry.local",
+      "metricName": "Query Latency",
+      "metricValue": "225 ms",
+      "threshold": "500 ms",
+      "metrics": {
+        "latency": 225,
+        "connections": 85,
+        "connectionLimit": 395,
+        "storage": 86.5,
+        "poolUtilization": 21.5
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "TCP",
+        "lastProbe": {
+          "status": "unreachable",
+          "rtt": "timeout",
+          "packetLoss": "N/A",
+          "performedAt": "last retry in 15s"
+        }
+      },
+      "registeredAt": "2026-08-03"
+    },
+    {
+      "id": 15,
+      "name": "replica-db-90",
+      "layer": "Database",
+      "environment": "Azure",
+      "endpoint": "58.125.21.21:1433",
+      "probeType": "TCP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "database-team@sentry.local",
+      "metricName": "Query Latency",
+      "metricValue": "232 ms",
+      "threshold": "500 ms",
+      "metrics": {
+        "latency": 232,
+        "connections": 231,
+        "connectionLimit": 299,
+        "storage": 74.2,
+        "poolUtilization": 77.3
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "TCP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "11ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-10"
+    },
+    {
+      "id": 16,
+      "name": "prod-sql-19",
+      "layer": "Database",
+      "environment": "Azure",
+      "endpoint": "98.66.26.73:1433",
+      "probeType": "TCP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "database-team@sentry.local",
+      "metricName": "Query Latency",
+      "metricValue": "119 ms",
+      "threshold": "500 ms",
+      "metrics": {
+        "latency": 119,
+        "connections": 81,
+        "connectionLimit": 363,
+        "storage": 87.8,
+        "poolUtilization": 22.3
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "TCP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "31ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-11"
+    },
+    {
+      "id": 17,
+      "name": "analytics-db-58",
+      "layer": "Database",
+      "environment": "On-Prem",
+      "endpoint": "181.30.189.201:1433",
+      "probeType": "TCP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Firing",
+      "alertState": "Firing",
+      "severity": "Critical",
+      "team": "database-team@sentry.local",
+      "metricName": "Query Latency",
+      "metricValue": "640 ms",
+      "threshold": "500 ms",
+      "metrics": {
+        "latency": 640,
+        "connections": 39,
+        "connectionLimit": 369,
+        "storage": 36.2,
+        "poolUtilization": 10.6
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "10s",
+        "base": "60s",
+        "rationale": "Firing — poll tightened to 10s for faster recovery signal."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "Degradation propagated from an upstream layer anomaly.",
+        "role": "Affected",
+        "relatedLayers": [
+          "Network"
+        ]
+      },
+      "diagnostics": {
+        "probeType": "TCP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "27ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-04"
+    },
+    {
+      "id": 18,
+      "name": "analytics-db-27",
+      "layer": "Database",
+      "environment": "On-Prem",
+      "endpoint": "110.205.218.113:1433",
+      "probeType": "TCP",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "database-team@sentry.local",
+      "metricName": "Query Latency",
+      "metricValue": "142 ms",
+      "threshold": "500 ms",
+      "metrics": {
+        "latency": 142,
+        "connections": 77,
+        "connectionLimit": 247,
+        "storage": 54,
+        "poolUtilization": 31.2
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "TCP",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "7ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-10"
+    },
+    {
+      "id": 19,
+      "name": "prod-vm-18",
+      "layer": "Server",
+      "environment": "Azure",
+      "endpoint": "46.201.53.99:22",
+      "probeType": "WMI",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "server-team@sentry.local",
+      "metricName": "CPU Usage",
+      "metricValue": "35.9%",
+      "threshold": "85%",
+      "metrics": {
+        "cpu": 35.9,
+        "memory": 36.6,
+        "disk": 83.9
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "WMI",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "16ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-11"
+    },
+    {
+      "id": 20,
+      "name": "backup-server-72",
+      "layer": "Server",
+      "environment": "On-Prem",
+      "endpoint": "105.68.161.133:22",
+      "probeType": "WMI",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "server-team@sentry.local",
+      "metricName": "CPU Usage",
+      "metricValue": "59.9%",
+      "threshold": "85%",
+      "metrics": {
+        "cpu": 59.9,
+        "memory": 71.6,
+        "disk": 51.6
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Transient suppressed — polling held at baseline cadence."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": true,
+        "suppressedSince": "6 mins ago",
+        "autoRetestIn": "2m"
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": "3m",
+        "status": "Holding",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "WMI",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "37ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-12"
+    },
+    {
+      "id": 21,
+      "name": "backup-server-55",
+      "layer": "Server",
+      "environment": "On-Prem",
+      "endpoint": "57.70.109.140:22",
+      "probeType": "WMI",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "server-team@sentry.local",
+      "metricName": "CPU Usage",
+      "metricValue": "47.9%",
+      "threshold": "85%",
+      "metrics": {
+        "cpu": 47.9,
+        "memory": 55.5,
+        "disk": 57.1
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "WMI",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "37ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-01"
+    },
+    {
+      "id": 22,
+      "name": "web-server-40",
+      "layer": "Server",
+      "environment": "Azure",
+      "endpoint": "152.249.83.63:22",
+      "probeType": "WMI",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "server-team@sentry.local",
+      "metricName": "CPU Usage",
+      "metricValue": "71.7%",
+      "threshold": "85%",
+      "metrics": {
+        "cpu": 71.7,
+        "memory": 44.9,
+        "disk": 49.4
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Healthy — polling at baseline cadence inside 10s-60s band."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": false,
+        "suppressedSince": null,
+        "autoRetestIn": null
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": null,
+        "status": "Idle",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "WMI",
+        "lastProbe": {
+          "status": "ok",
+          "rtt": "10ms",
+          "packetLoss": "0.0%",
+          "performedAt": "just now"
+        }
+      },
+      "registeredAt": "2026-08-08"
+    },
+    {
+      "id": 23,
+      "name": "backup-server-35",
+      "layer": "Server",
+      "environment": "On-Prem",
+      "endpoint": "154.243.63.64:22",
+      "probeType": "WMI",
+      "interval": "60s",
+      "baseInterval": "60s",
+      "status": "Healthy",
+      "alertState": "Normal",
+      "severity": "Low",
+      "team": "server-team@sentry.local",
+      "metricName": "CPU Usage",
+      "metricValue": "57.8%",
+      "threshold": "85%",
+      "metrics": {
+        "cpu": 57.8,
+        "memory": 69.5,
+        "disk": 78.6
+      },
+      "adaptivePoll": {
+        "enabled": true,
+        "mode": "Auto",
+        "rangeMin": 10,
+        "rangeMax": 60,
+        "current": "60s",
+        "base": "60s",
+        "rationale": "Transient suppressed — polling held at baseline cadence."
+      },
+      "transientFilter": {
+        "enabled": true,
+        "window": "<3m",
+        "active": true,
+        "suppressed": true,
+        "suppressedSince": "6 mins ago",
+        "autoRetestIn": "2m"
+      },
+      "autoEscalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remaining": "7m",
+        "status": "Holding",
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": {
+        "summary": "No active cascade anomalies detected for this target.",
+        "role": "Stable",
+        "relatedLayers": []
+      },
+      "diagnostics": {
+        "probeType": "WMI",
+        "lastProbe": {
+          "status": "unreachable",
+          "rtt": "timeout",
+          "packetLoss": "N/A",
+          "performedAt": "last retry in 15s"
+        }
+      },
+      "registeredAt": "2026-08-03"
+    }
+  ],
+  "alerts": [
+    {
+      "id": 1786619773162,
+      "component": "core-switch-71",
+      "layer": "Network",
+      "environment": "On-Prem",
+      "metric": "Packet Loss (4.40%)",
+      "summary": "Packet Loss above 2.0% threshold.",
+      "time": "17 mins ago",
+      "state": "Firing",
+      "status": "Escalated",
+      "severity": "Critical",
+      "alertState": "Firing",
+      "alias": "network-team@sentry.local",
+      "transientFiltered": false,
+      "escalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remainingSeconds": 0,
+        "remaining": null,
+        "escalated": true,
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": "Network Packet Loss on core-switch-71 is correlated with degraded Database / Application (analytics-db-58, inventory-service-56) — cascade detected within the correlation window."
+    },
+    {
+      "id": 1786619773163,
+      "component": "inventory-service-56",
+      "layer": "Application",
+      "environment": "On-Prem",
+      "metric": "Error Rate (2.20%)",
+      "summary": "Error Rate above 1.0% threshold.",
+      "time": "24 mins ago",
+      "state": "Firing",
+      "status": "Firing",
+      "severity": "Critical",
+      "alertState": "Firing",
+      "alias": "application-team@sentry.local",
+      "transientFiltered": false,
+      "escalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remainingSeconds": 756,
+        "remaining": "14m",
+        "escalated": false,
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": "Network Packet Loss on core-switch-71 is correlated with degraded Database / Application (analytics-db-58, inventory-service-56) — cascade detected within the correlation window."
+    },
+    {
+      "id": 1786619773164,
+      "component": "analytics-db-58",
+      "layer": "Database",
+      "environment": "On-Prem",
+      "metric": "Query Latency (640 ms)",
+      "summary": "Query Latency above 500 ms threshold.",
+      "time": "7 mins ago",
+      "state": "Firing",
+      "status": "Firing",
+      "severity": "Critical",
+      "alertState": "Firing",
+      "alias": "database-team@sentry.local",
+      "transientFiltered": false,
+      "escalation": {
+        "enabled": true,
+        "timer": "15m",
+        "timerSeconds": 900,
+        "remainingSeconds": 525,
+        "remaining": null,
+        "escalated": false,
+        "secondaryAlias": "oncall-secondary@sentry.local"
+      },
+      "correlation": "Network Packet Loss on core-switch-71 is correlated with degraded Database / Application (analytics-db-58, inventory-service-56) — cascade detected within the correlation window."
+    }
+  ],
+  "correlations": [
+    {
+      "id": 1,
+      "status": "Active",
+      "confidence": 92,
+      "detectedAt": "10 mins ago",
+      "narrative": "Network Packet Loss on core-switch-71 is correlated with degraded Database / Application (analytics-db-58, inventory-service-56) — cascade detected within the correlation window.",
+      "root": {
+        "layer": "Network",
+        "component": "core-switch-71",
+        "metric": "Packet Loss (4.40%)"
+      },
+      "affected": [
+        {
+          "layer": "Database",
+          "component": "analytics-db-58",
+          "metric": "Query Latency (640 ms)",
+          "lag": "2m"
+        },
+        {
+          "layer": "Application",
+          "component": "inventory-service-56",
+          "metric": "Error Rate (2.20%)",
+          "lag": "1m"
+        }
+      ]
+    }
+  ],
+  "series": {
+    "dbQueryLatency": {
+      "label": "Query Latency",
+      "layer": "Database",
+      "unit": "ms",
+      "threshold": 500,
+      "window": "2h",
+      "points": [
+        {
+          "time": "02:51 PM",
+          "value": 355
+        },
+        {
+          "time": "02:56 PM",
+          "value": 247
+        },
+        {
+          "time": "03:01 PM",
+          "value": 180
+        },
+        {
+          "time": "03:06 PM",
+          "value": 193
+        },
+        {
+          "time": "03:11 PM",
+          "value": 175
+        },
+        {
+          "time": "03:16 PM",
+          "value": 273
+        },
+        {
+          "time": "03:21 PM",
+          "value": 216
+        },
+        {
+          "time": "03:26 PM",
+          "value": 177
+        },
+        {
+          "time": "03:31 PM",
+          "value": 149
+        },
+        {
+          "time": "03:36 PM",
+          "value": 138
+        },
+        {
+          "time": "03:41 PM",
+          "value": 115
+        },
+        {
+          "time": "03:46 PM",
+          "value": 137
+        },
+        {
+          "time": "03:51 PM",
+          "value": 211
+        },
+        {
+          "time": "03:56 PM",
+          "value": 287
+        },
+        {
+          "time": "04:01 PM",
+          "value": 278
+        },
+        {
+          "time": "04:06 PM",
+          "value": 362
+        },
+        {
+          "time": "04:11 PM",
+          "value": 440
+        },
+        {
+          "time": "04:16 PM",
+          "value": 351
+        },
+        {
+          "time": "04:21 PM",
+          "value": 300
+        },
+        {
+          "time": "04:26 PM",
+          "value": 341
+        },
+        {
+          "time": "04:31 PM",
+          "value": 277
+        },
+        {
+          "time": "04:36 PM",
+          "value": 178
+        },
+        {
+          "time": "04:41 PM",
+          "value": 148
+        },
+        {
+          "time": "04:46 PM",
+          "value": 448
+        }
+      ]
+    },
+    "dbPoolUtilization": {
+      "label": "Connection Pool Utilization",
+      "layer": "Database",
+      "unit": "%",
+      "threshold": 85,
+      "window": "2h",
+      "points": [
+        {
+          "time": "02:51 PM",
+          "value": 69
+        },
+        {
+          "time": "02:56 PM",
+          "value": 57
+        },
+        {
+          "time": "03:01 PM",
+          "value": 47
+        },
+        {
+          "time": "03:06 PM",
+          "value": 53
+        },
+        {
+          "time": "03:11 PM",
+          "value": 51
+        },
+        {
+          "time": "03:16 PM",
+          "value": 57
+        },
+        {
+          "time": "03:21 PM",
+          "value": 53
+        },
+        {
+          "time": "03:26 PM",
+          "value": 51
+        },
+        {
+          "time": "03:31 PM",
+          "value": 44
+        },
+        {
+          "time": "03:36 PM",
+          "value": 39
+        },
+        {
+          "time": "03:41 PM",
+          "value": 43
+        },
+        {
+          "time": "03:46 PM",
+          "value": 43
+        },
+        {
+          "time": "03:51 PM",
+          "value": 51
+        },
+        {
+          "time": "03:56 PM",
+          "value": 60
+        },
+        {
+          "time": "04:01 PM",
+          "value": 58
+        },
+        {
+          "time": "04:06 PM",
+          "value": 66
+        },
+        {
+          "time": "04:11 PM",
+          "value": 74
+        },
+        {
+          "time": "04:16 PM",
+          "value": 65
+        },
+        {
+          "time": "04:21 PM",
+          "value": 58
+        },
+        {
+          "time": "04:26 PM",
+          "value": 66
+        },
+        {
+          "time": "04:31 PM",
+          "value": 61
+        },
+        {
+          "time": "04:36 PM",
+          "value": 48
+        },
+        {
+          "time": "04:41 PM",
+          "value": 47
+        },
+        {
+          "time": "04:46 PM",
+          "value": 75
+        }
+      ]
+    },
+    "appErrorRate": {
+      "label": "Error Rate",
+      "layer": "Application",
+      "unit": "%",
+      "threshold": 1,
+      "window": "2h",
+      "points": [
+        {
+          "time": "02:51 PM",
+          "value": 1.14
+        },
+        {
+          "time": "02:56 PM",
+          "value": 1.11
+        },
+        {
+          "time": "03:01 PM",
+          "value": 1.17
+        },
+        {
+          "time": "03:06 PM",
+          "value": 1.23
+        },
+        {
+          "time": "03:11 PM",
+          "value": 1.1
+        },
+        {
+          "time": "03:16 PM",
+          "value": 1.27
+        },
+        {
+          "time": "03:21 PM",
+          "value": 1.2
+        },
+        {
+          "time": "03:26 PM",
+          "value": 1.44
+        },
+        {
+          "time": "03:31 PM",
+          "value": 1.3
+        },
+        {
+          "time": "03:36 PM",
+          "value": 1.22
+        },
+        {
+          "time": "03:41 PM",
+          "value": 1.1
+        },
+        {
+          "time": "03:46 PM",
+          "value": 0.98
+        },
+        {
+          "time": "03:51 PM",
+          "value": 0.79
+        },
+        {
+          "time": "03:56 PM",
+          "value": 0.7
+        },
+        {
+          "time": "04:01 PM",
+          "value": 1
+        },
+        {
+          "time": "04:06 PM",
+          "value": 0.98
+        },
+        {
+          "time": "04:11 PM",
+          "value": 1.08
+        },
+        {
+          "time": "04:16 PM",
+          "value": 1
+        },
+        {
+          "time": "04:21 PM",
+          "value": 1.03
+        },
+        {
+          "time": "04:26 PM",
+          "value": 0.81
+        },
+        {
+          "time": "04:31 PM",
+          "value": 0.83
+        },
+        {
+          "time": "04:36 PM",
+          "value": 0.61
+        },
+        {
+          "time": "04:41 PM",
+          "value": 0.49
+        },
+        {
+          "time": "04:46 PM",
+          "value": 0.91
+        }
+      ]
+    },
+    "appResponseTime": {
+      "label": "Response Time",
+      "layer": "Application",
+      "unit": "ms",
+      "threshold": 500,
+      "window": "2h",
+      "points": [
+        {
+          "time": "02:51 PM",
+          "value": 481
+        },
+        {
+          "time": "02:56 PM",
+          "value": 492
+        },
+        {
+          "time": "03:01 PM",
+          "value": 535
+        },
+        {
+          "time": "03:06 PM",
+          "value": 549
+        },
+        {
+          "time": "03:11 PM",
+          "value": 517
+        },
+        {
+          "time": "03:16 PM",
+          "value": 555
+        },
+        {
+          "time": "03:21 PM",
+          "value": 515
+        },
+        {
+          "time": "03:26 PM",
+          "value": 604
+        },
+        {
+          "time": "03:31 PM",
+          "value": 582
+        },
+        {
+          "time": "03:36 PM",
+          "value": 542
+        },
+        {
+          "time": "03:41 PM",
+          "value": 509
+        },
+        {
+          "time": "03:46 PM",
+          "value": 423
+        },
+        {
+          "time": "03:51 PM",
+          "value": 386
+        },
+        {
+          "time": "03:56 PM",
+          "value": 356
+        },
+        {
+          "time": "04:01 PM",
+          "value": 427
+        },
+        {
+          "time": "04:06 PM",
+          "value": 421
+        },
+        {
+          "time": "04:11 PM",
+          "value": 482
+        },
+        {
+          "time": "04:16 PM",
+          "value": 428
+        },
+        {
+          "time": "04:21 PM",
+          "value": 468
+        },
+        {
+          "time": "04:26 PM",
+          "value": 397
+        },
+        {
+          "time": "04:31 PM",
+          "value": 394
+        },
+        {
+          "time": "04:36 PM",
+          "value": 293
+        },
+        {
+          "time": "04:41 PM",
+          "value": 267
+        },
+        {
+          "time": "04:46 PM",
+          "value": 460
+        }
+      ]
+    },
+    "appRequestRate": {
+      "label": "Request Rate",
+      "layer": "Application",
+      "unit": "req/s",
+      "threshold": null,
+      "window": "2h",
+      "points": [
+        {
+          "time": "02:51 PM",
+          "value": 761
+        },
+        {
+          "time": "02:56 PM",
+          "value": 790
+        },
+        {
+          "time": "03:01 PM",
+          "value": 766
+        },
+        {
+          "time": "03:06 PM",
+          "value": 804
+        },
+        {
+          "time": "03:11 PM",
+          "value": 773
+        },
+        {
+          "time": "03:16 PM",
+          "value": 777
+        },
+        {
+          "time": "03:21 PM",
+          "value": 841
+        },
+        {
+          "time": "03:26 PM",
+          "value": 778
+        },
+        {
+          "time": "03:31 PM",
+          "value": 774
+        },
+        {
+          "time": "03:36 PM",
+          "value": 796
+        },
+        {
+          "time": "03:41 PM",
+          "value": 803
+        },
+        {
+          "time": "03:46 PM",
+          "value": 866
+        },
+        {
+          "time": "03:51 PM",
+          "value": 826
+        },
+        {
+          "time": "03:56 PM",
+          "value": 857
+        },
+        {
+          "time": "04:01 PM",
+          "value": 869
+        },
+        {
+          "time": "04:06 PM",
+          "value": 826
+        },
+        {
+          "time": "04:11 PM",
+          "value": 805
+        },
+        {
+          "time": "04:16 PM",
+          "value": 764
+        },
+        {
+          "time": "04:21 PM",
+          "value": 879
+        },
+        {
+          "time": "04:26 PM",
+          "value": 830
+        },
+        {
+          "time": "04:31 PM",
+          "value": 872
+        },
+        {
+          "time": "04:36 PM",
+          "value": 780
+        },
+        {
+          "time": "04:41 PM",
+          "value": 830
+        },
+        {
+          "time": "04:46 PM",
+          "value": 773
+        }
+      ]
+    },
+    "networkPacketLoss": {
+      "label": "Packet Loss",
+      "layer": "Network",
+      "unit": "%",
+      "threshold": 2,
+      "window": "2h",
+      "points": [
+        {
+          "time": "02:51 PM",
+          "value": 0.23
+        },
+        {
+          "time": "02:56 PM",
+          "value": 0.06
+        },
+        {
+          "time": "03:01 PM",
+          "value": 0.1
+        },
+        {
+          "time": "03:06 PM",
+          "value": 0.18
+        },
+        {
+          "time": "03:11 PM",
+          "value": 0.2
+        },
+        {
+          "time": "03:16 PM",
+          "value": 0.18
+        },
+        {
+          "time": "03:21 PM",
+          "value": 0.25
+        },
+        {
+          "time": "03:26 PM",
+          "value": 0.06
+        },
+        {
+          "time": "03:31 PM",
+          "value": 0.14
+        },
+        {
+          "time": "03:36 PM",
+          "value": 0.07
+        },
+        {
+          "time": "03:41 PM",
+          "value": 0.26
+        },
+        {
+          "time": "03:46 PM",
+          "value": 0.07
+        },
+        {
+          "time": "03:51 PM",
+          "value": 0.06
+        },
+        {
+          "time": "03:56 PM",
+          "value": 0.2
+        },
+        {
+          "time": "04:01 PM",
+          "value": 0.23
+        },
+        {
+          "time": "04:06 PM",
+          "value": 0.36
+        },
+        {
+          "time": "04:11 PM",
+          "value": 0.51
+        },
+        {
+          "time": "04:16 PM",
+          "value": 0.51
+        },
+        {
+          "time": "04:21 PM",
+          "value": 0.86
+        },
+        {
+          "time": "04:26 PM",
+          "value": 0.5
+        },
+        {
+          "time": "04:31 PM",
+          "value": 1.05
+        },
+        {
+          "time": "04:36 PM",
+          "value": 0.84
+        },
+        {
+          "time": "04:41 PM",
+          "value": 0.36
+        },
+        {
+          "time": "04:46 PM",
+          "value": 0.36
+        }
+      ]
+    },
+    "networkLatency": {
+      "label": "Latency",
+      "layer": "Network",
+      "unit": "ms",
+      "threshold": 120,
+      "window": "2h",
+      "points": [
+        {
+          "time": "02:51 PM",
+          "value": 21
+        },
+        {
+          "time": "02:56 PM",
+          "value": 26
+        },
+        {
+          "time": "03:01 PM",
+          "value": 28
+        },
+        {
+          "time": "03:06 PM",
+          "value": 21
+        },
+        {
+          "time": "03:11 PM",
+          "value": 24
+        },
+        {
+          "time": "03:16 PM",
+          "value": 21
+        },
+        {
+          "time": "03:21 PM",
+          "value": 25
+        },
+        {
+          "time": "03:26 PM",
+          "value": 30
+        },
+        {
+          "time": "03:31 PM",
+          "value": 22
+        },
+        {
+          "time": "03:36 PM",
+          "value": 22
+        },
+        {
+          "time": "03:41 PM",
+          "value": 23
+        },
+        {
+          "time": "03:46 PM",
+          "value": 23
+        },
+        {
+          "time": "03:51 PM",
+          "value": 26
+        },
+        {
+          "time": "03:56 PM",
+          "value": 27
+        },
+        {
+          "time": "04:01 PM",
+          "value": 18
+        },
+        {
+          "time": "04:06 PM",
+          "value": 32
+        },
+        {
+          "time": "04:11 PM",
+          "value": 43
+        },
+        {
+          "time": "04:16 PM",
+          "value": 45
+        },
+        {
+          "time": "04:21 PM",
+          "value": 57
+        },
+        {
+          "time": "04:26 PM",
+          "value": 42
+        },
+        {
+          "time": "04:31 PM",
+          "value": 66
+        },
+        {
+          "time": "04:36 PM",
+          "value": 58
+        },
+        {
+          "time": "04:41 PM",
+          "value": 30
+        },
+        {
+          "time": "04:46 PM",
+          "value": 34
+        }
+      ]
+    },
+    "serverCpu": {
+      "label": "CPU Utilization",
+      "layer": "Server",
+      "unit": "%",
+      "threshold": 80,
+      "window": "2h",
+      "points": [
+        {
+          "time": "02:51 PM",
+          "value": 42.8
+        },
+        {
+          "time": "02:56 PM",
+          "value": 44.4
+        },
+        {
+          "time": "03:01 PM",
+          "value": 41.9
+        },
+        {
+          "time": "03:06 PM",
+          "value": 40.7
+        },
+        {
+          "time": "03:11 PM",
+          "value": 42.8
+        },
+        {
+          "time": "03:16 PM",
+          "value": 47.5
+        },
+        {
+          "time": "03:21 PM",
+          "value": 43.9
+        },
+        {
+          "time": "03:26 PM",
+          "value": 45.5
+        },
+        {
+          "time": "03:31 PM",
+          "value": 46.2
+        },
+        {
+          "time": "03:36 PM",
+          "value": 42.1
+        },
+        {
+          "time": "03:41 PM",
+          "value": 48.4
+        },
+        {
+          "time": "03:46 PM",
+          "value": 48.7
+        },
+        {
+          "time": "03:51 PM",
+          "value": 44.5
+        },
+        {
+          "time": "03:56 PM",
+          "value": 44.8
+        },
+        {
+          "time": "04:01 PM",
+          "value": 49.5
+        },
+        {
+          "time": "04:06 PM",
+          "value": 49.6
+        },
+        {
+          "time": "04:11 PM",
+          "value": 40.7
+        },
+        {
+          "time": "04:16 PM",
+          "value": 42
+        },
+        {
+          "time": "04:21 PM",
+          "value": 40.4
+        },
+        {
+          "time": "04:26 PM",
+          "value": 40.8
+        },
+        {
+          "time": "04:31 PM",
+          "value": 42.1
+        },
+        {
+          "time": "04:36 PM",
+          "value": 46
+        },
+        {
+          "time": "04:41 PM",
+          "value": 48.3
+        },
+        {
+          "time": "04:46 PM",
+          "value": 49.3
+        }
+      ]
+    }
+  },
+  "config": {
+    "adaptivePolling": {
+      "enabled": true,
+      "mode": "Auto",
+      "rangeMin": 10,
+      "rangeMax": 60,
+      "label": "10s-60s",
+      "distribution": {
+        "10s": 3,
+        "15s": 0,
+        "30s": 0,
+        "60s": 20
+      },
+      "highFidelityTargets": 3,
+      "meanInterval": 53.5,
+      "bandwidthSavingsPercent": 81
+    },
+    "transientFilter": {
+      "enabled": true,
+      "windowSeconds": 180,
+      "label": "<3m",
+      "active": true,
+      "suppressedToday": 33,
+      "suppressed": [
+        {
+          "component": "ingress-proxy-22",
+          "layer": "Network",
+          "metric": "Packet Loss (0.53%)",
+          "silencedAt": "4 mins ago"
+        },
+        {
+          "component": "inventory-service-56",
+          "layer": "Application",
+          "metric": "Error Rate (2.20%)",
+          "silencedAt": "6 mins ago"
+        },
+        {
+          "component": "order-service-34",
+          "layer": "Application",
+          "metric": "Error Rate (0.80%)",
+          "silencedAt": "2 mins ago"
+        },
+        {
+          "component": "backup-server-72",
+          "layer": "Server",
+          "metric": "CPU Usage (59.9%)",
+          "silencedAt": "6 mins ago"
+        },
+        {
+          "component": "backup-server-35",
+          "layer": "Server",
+          "metric": "CPU Usage (57.8%)",
+          "silencedAt": "6 mins ago"
+        }
+      ]
+    },
+    "autoEscalation": {
+      "enabled": true,
+      "timerMinutes": 15,
+      "secondaryAlias": "oncall-secondary@sentry.local",
+      "active": 3,
+      "escalated": 1
+    },
+    "correlationEngine": {
+      "enabled": true,
+      "activeCorrelations": 1,
+      "window": "15m"
+    },
+    "tunnel": {
+      "transport": "VPN / AVD",
+      "reachable": 20,
+      "degraded": 0,
+      "unreachable": 3
+    }
+  },
+  "history": [
+    {
+      "time": "02:51 PM",
+      "Network": 91,
+      "Application": 78,
+      "Database": 83,
+      "Server": 97,
+      "health": 87,
+      "incidents": 2,
+      "suppressed": 2
+    },
+    {
+      "time": "02:56 PM",
+      "Network": 91,
+      "Application": 78,
+      "Database": 86,
+      "Server": 96,
+      "health": 88,
+      "incidents": 2,
+      "suppressed": 1
+    },
+    {
+      "time": "03:01 PM",
+      "Network": 94,
+      "Application": 77,
+      "Database": 88,
+      "Server": 99,
+      "health": 90,
+      "incidents": 2,
+      "suppressed": 0
+    },
+    {
+      "time": "03:06 PM",
+      "Network": 91,
+      "Application": 77,
+      "Database": 88,
+      "Server": 100,
+      "health": 89,
+      "incidents": 2,
+      "suppressed": 0
+    },
+    {
+      "time": "03:11 PM",
+      "Network": 91,
+      "Application": 78,
+      "Database": 88,
+      "Server": 100,
+      "health": 89,
+      "incidents": 2,
+      "suppressed": 0
+    },
+    {
+      "time": "03:16 PM",
+      "Network": 93,
+      "Application": 76,
+      "Database": 86,
+      "Server": 99,
+      "health": 89,
+      "incidents": 2,
+      "suppressed": 3
+    },
+    {
+      "time": "03:21 PM",
+      "Network": 95,
+      "Application": 77,
+      "Database": 87,
+      "Server": 97,
+      "health": 89,
+      "incidents": 2,
+      "suppressed": 1
+    },
+    {
+      "time": "03:26 PM",
+      "Network": 97,
+      "Application": 74,
+      "Database": 88,
+      "Server": 98,
+      "health": 89,
+      "incidents": 2,
+      "suppressed": 0
+    },
+    {
+      "time": "03:31 PM",
+      "Network": 97,
+      "Application": 75,
+      "Database": 89,
+      "Server": 99,
+      "health": 90,
+      "incidents": 2,
+      "suppressed": 1
+    },
+    {
+      "time": "03:36 PM",
+      "Network": 97,
+      "Application": 76,
+      "Database": 92,
+      "Server": 100,
+      "health": 91,
+      "incidents": 1,
+      "suppressed": 0
+    },
+    {
+      "time": "03:41 PM",
+      "Network": 94,
+      "Application": 78,
+      "Database": 91,
+      "Server": 99,
+      "health": 91,
+      "incidents": 1,
+      "suppressed": 3
+    },
+    {
+      "time": "03:46 PM",
+      "Network": 93,
+      "Application": 80,
+      "Database": 89,
+      "Server": 100,
+      "health": 91,
+      "incidents": 2,
+      "suppressed": 3
+    },
+    {
+      "time": "03:51 PM",
+      "Network": 91,
+      "Application": 82,
+      "Database": 87,
+      "Server": 100,
+      "health": 90,
+      "incidents": 2,
+      "suppressed": 1
+    },
+    {
+      "time": "03:56 PM",
+      "Network": 92,
+      "Application": 83,
+      "Database": 85,
+      "Server": 99,
+      "health": 90,
+      "incidents": 2,
+      "suppressed": 3
+    },
+    {
+      "time": "04:01 PM",
+      "Network": 91,
+      "Application": 80,
+      "Database": 85,
+      "Server": 100,
+      "health": 89,
+      "incidents": 2,
+      "suppressed": 2
+    },
+    {
+      "time": "04:06 PM",
+      "Network": 89,
+      "Application": 80,
+      "Database": 83,
+      "Server": 100,
+      "health": 88,
+      "incidents": 3,
+      "suppressed": 1
+    },
+    {
+      "time": "04:11 PM",
+      "Network": 87,
+      "Application": 78,
+      "Database": 81,
+      "Server": 100,
+      "health": 87,
+      "incidents": 3,
+      "suppressed": 1
+    },
+    {
+      "time": "04:16 PM",
+      "Network": 88,
+      "Application": 80,
+      "Database": 83,
+      "Server": 100,
+      "health": 88,
+      "incidents": 3,
+      "suppressed": 0
+    },
+    {
+      "time": "04:21 PM",
+      "Network": 86,
+      "Application": 79,
+      "Database": 85,
+      "Server": 100,
+      "health": 88,
+      "incidents": 3,
+      "suppressed": 2
+    },
+    {
+      "time": "04:26 PM",
+      "Network": 88,
+      "Application": 82,
+      "Database": 83,
+      "Server": 99,
+      "health": 88,
+      "incidents": 3,
+      "suppressed": 2
+    },
+    {
+      "time": "04:31 PM",
+      "Network": 85,
+      "Application": 82,
+      "Database": 85,
+      "Server": 99,
+      "health": 88,
+      "incidents": 3,
+      "suppressed": 1
+    },
+    {
+      "time": "04:36 PM",
+      "Network": 86,
+      "Application": 85,
+      "Database": 88,
+      "Server": 100,
+      "health": 90,
+      "incidents": 3,
+      "suppressed": 1
+    },
+    {
+      "time": "04:41 PM",
+      "Network": 89,
+      "Application": 86,
+      "Database": 89,
+      "Server": 100,
+      "health": 91,
+      "incidents": 3,
+      "suppressed": 0
+    },
+    {
+      "time": "04:46 PM",
+      "Network": 88,
+      "Application": 80,
+      "Database": 80,
+      "Server": 100,
+      "health": 87,
+      "incidents": 3,
+      "suppressed": 5
+    }
+  ],
+  "resilience": {
+    "rtoTarget": 55,
+    "backupCoverage": 93,
+    "lastRecovery": 33,
+    "lastDrillPassed": true,
+    "backupSchedule": "Nightly 02:00 UTC",
+    "rpoTarget": 22
+  }
+}
